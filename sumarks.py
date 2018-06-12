@@ -50,15 +50,19 @@ def fetch_marks():
     for i in range(2, len(table[0])):
         modname = table[0][i][1].text_content()
         modname = ' '.join(modname.split())
-        modmark = table[0][i][5].text_content()
+        modmark = table[0][i][4].text_content()
         modmark = ' '.join(modmark.split())
-        result[modname] = modmark
+        if modmark == '':
+            modmark = u"\u2022"
+        modstatus = table[0][i][5].text_content()
+        modstatus = ' '.join(modstatus.split())
+        result[modname] = [modmark, modstatus]
     return result
 
 
 def print_results(results_dict):
     for key, value in results_dict.items():
-        print("{0} - {1}".format(key, value))
+        print("{0} - {1}% - {2}".format(key, value[0], value[1]))
 
 
 if __name__ == "__main__":
